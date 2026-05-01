@@ -31,6 +31,7 @@ The first semester established a baseline pipeline and reproduced standard model
 
 ## Repository Structure
 
+```text
 brats-segmentation-study/
 ├── configs/         # YAML experiment configurations
 ├── data/            # Local dataset utilities (BraTS data is not committed)
@@ -41,8 +42,9 @@ brats-segmentation-study/
 │   ├── training/    # Training loops, schedulers, callbacks
 │   └── evaluation/  # Metrics, sliding-window inference, analysis
 └── outputs/
-├── checkpoints/ # Saved model weights
-└── logs/        # Training logs and CSV results
+    ├── checkpoints/ # Saved model weights
+    └── logs/        # Training logs and CSV results
+```
 
 ## Setup
 
