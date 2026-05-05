@@ -1,0 +1,34 @@
+# Example configuration for a single training run.
+# Copy and modify this for each experiment in the data-efficiency study.
+
+run_name: "unet_full_data_seed42"
+seed: 42
+output_dir: "outputs"
+
+data:
+  tar_path: "/kaggle/input/datasets/dschettler8845/brats-2021-task1/BraTS2021_Training_Data.tar"
+  extracted_dir: "/kaggle/working/brats_extracted"
+  val_frac: 0.15
+  test_frac: 0.15
+  patch_size: [128, 128, 128]
+  batch_size: 1
+  num_workers: 2
+  cache_rate: 0.1
+  train_fraction: 1.0   # set to 0.1, 0.25, 0.5, 1.0 for the data-efficiency study
+
+model:
+  name: "unet"          # "unet" or "transunet_tiny"
+  in_channels: 4
+  num_classes: 1        # 1 = binary, 3 = multi-class WT/TC/ET (later)
+
+training:
+  learning_rate: 0.0001
+  max_epochs: 20
+  sw_batch_size: 4
+
+evaluation:
+  include_hausdorff: false
+
+wandb:
+  enabled: false        # set true after wandb.login()
+  project: "brats-segmentation"
