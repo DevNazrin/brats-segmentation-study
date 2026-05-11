@@ -65,7 +65,7 @@ def main():
     )
 
     # 4. Model
-    out_channels = cfg["model"]["num_classes"] + 1 if cfg["model"]["num_classes"] > 1 else 2
+    out_channels = cfg["model"]["num_classes"] + 1 if cfg["model"]["num_classes"] > 1 else 1
     model = build_model(
         model_name=cfg["model"]["name"],
         in_channels=cfg["model"]["in_channels"],
