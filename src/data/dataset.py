@@ -17,6 +17,7 @@ from monai.transforms import (
     EnsureChannelFirstd,
     NormalizeIntensityd,
     CropForegroundd,
+    SpatialPadd,
     RandSpatialCropd,
     RandFlipd,
     EnsureTyped,
@@ -159,12 +160,9 @@ def get_transforms(
     base = [
         LoadImaged(keys=all_keys),
         EnsureChannelFirstd(keys=all_keys),
-        # Per-modality normalization: each modality independently z-scored
-        # using only nonzero voxels (excludes background air around the brain).
         NormalizeIntensityd(keys=image_keys, nonzero=True, channel_wise=True),
-        # Crop to nonzero foreground using FLAIR as the reference channel.
         CropForegroundd(keys=all_keys, source_key="image_flair"),
-        # Concatenate the four modalities into a single 4-channel image tensor.
+        SpatialPadd(keys=all_keys, spatial_size=patch_size),
         ConcatItemsd(keys=image_keys, name="image", dim=0),
     ]
 
