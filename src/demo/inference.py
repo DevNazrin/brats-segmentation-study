@@ -137,3 +137,15 @@ def compute_tumor_volume_mm3(mask: np.ndarray, voxel_spacing: Tuple[float, float
     voxel_volume_mm3 = voxel_spacing[0] * voxel_spacing[1] * voxel_spacing[2]
     n_tumor_voxels = int(mask.sum())
     return n_tumor_voxels * voxel_volume_mm3
+
+def load_ground_truth(seg_path: str) -> np.ndarray:
+    """
+    Load a BraTS segmentation mask and binarize it (any tumor → 1).
+
+    Returns a 3D numpy array (D, H, W) with values 0 or 1, matching the
+    prediction mask's shape and convention.
+    """
+    seg_img = nib.load(seg_path)
+    seg = seg_img.get_fdata().astype(np.uint8)
+    # Binary: any nonzero label is tumor
+    return (seg > 0).astype(np.uint8)
